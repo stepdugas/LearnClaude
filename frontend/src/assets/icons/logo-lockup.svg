@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 56" fill="none">
+  <defs>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.855 0 0 0 0 0.467 0 0 0 0 0.337 0 0 0 0.3 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Icon -->
+  <g filter="url(#glow)" transform="translate(28,28)">
+    <rect x="-3.5" y="-17" width="7" height="34" rx="3.5" fill="#DA7756" transform="rotate(0)"/>
+    <rect x="-3.5" y="-15" width="7" height="30" rx="3.5" fill="#DA7756" transform="rotate(90)"/>
+    <rect x="-3" y="-13.5" width="6" height="27" rx="3" fill="#DA7756" transform="rotate(45)"/>
+    <rect x="-3" y="-13.5" width="6" height="27" rx="3" fill="#DA7756" transform="rotate(135)"/>
+    <circle r="5" fill="#DA7756"/>
+    <circle r="2.2" fill="#FAF9F5"/>
+    <g transform="translate(0,-15.3)">
+      <path d="M-1.5,0.7 Q0,-0.7 1.5,0.7" stroke="#FAF9F5" stroke-width="0.7" stroke-linecap="round" fill="none"/>
+    </g>
+  </g>
+
+  <!-- Text: "Learn" in coral, "Claude.ai" in charcoal -->
+  <text x="60" y="35" font-family="Inter, system-ui, -apple-system, sans-serif" font-size="24" font-weight="600" letter-spacing="-0.5">
+    <tspan fill="#DA7756">Learn</tspan><tspan fill="#1A1A1A">Claude.ai</tspan>
+  </text>
+</svg>
