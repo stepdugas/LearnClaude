@@ -9,6 +9,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   const isLoggedIn = computed(() => !!accessToken.value)
   const isAdmin = computed(() => user.value?.role === 'ADMIN')
+  const hasPaidPlan = computed(() => user.value?.plan === 'PRO' || user.value?.plan === 'LIFETIME')
 
   function setAuth(data) {
     accessToken.value = data.accessToken
@@ -62,5 +63,5 @@ export const useAuthStore = defineStore('auth', () => {
     clearAuth()
   }
 
-  return { user, accessToken, refreshToken, isLoggedIn, isAdmin, setAuth, register, login, refresh, logout, clearAuth }
+  return { user, accessToken, refreshToken, isLoggedIn, isAdmin, hasPaidPlan, setAuth, register, login, refresh, logout, clearAuth }
 })

@@ -1,5 +1,20 @@
 <template>
   <div class="max-w-4xl mx-auto px-6 py-12">
+    <!-- Upgrade success banner -->
+    <div v-if="showUpgradeBanner" class="bg-green-50 border border-green-200 rounded-2xl p-5 mb-8 flex items-center justify-between animate-fade-in-up">
+      <div class="flex items-center gap-3">
+        <svg class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+        </svg>
+        <span class="text-green-800 font-medium">You're all set! All 17 lessons are now unlocked.</span>
+      </div>
+      <button @click="showUpgradeBanner = false" class="text-green-600 hover:text-green-800">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
     <!-- Header -->
     <div class="flex items-center justify-between mb-8">
       <div>
@@ -7,8 +22,12 @@
         <p class="text-muted mt-1">Welcome back, {{ auth.user?.email }}</p>
       </div>
       <span class="text-xs font-semibold px-3 py-1.5 rounded-full"
-            :class="auth.user?.plan === 'PRO' ? 'bg-coral/10 text-coral' : 'bg-surface text-muted'">
-        {{ auth.user?.plan }} plan
+            :class="{
+              'bg-surface text-muted': auth.user?.plan === 'FREE',
+              'bg-coral/10 text-coral': auth.user?.plan === 'PRO',
+              'bg-charcoal text-white': auth.user?.plan === 'LIFETIME'
+            }">
+        {{ auth.user?.plan === 'LIFETIME' ? 'LIFETIME' : auth.user?.plan }} plan
       </span>
     </div>
 
@@ -54,10 +73,11 @@
             v-for="lesson in lessonsByTier(tier.number)" :key="lesson.id"
             :is="canAccess(lesson) ? 'router-link' : 'div'"
             :to="canAccess(lesson) ? `/lessons/${lesson.id}` : undefined"
+            @click="!canAccess(lesson) && (showUpgradeModal = true)"
             class="group flex items-center gap-4 p-4 rounded-xl border bg-white transition-all duration-200"
             :class="canAccess(lesson)
               ? 'border-surface hover:border-coral/30 hover:shadow-sm cursor-pointer'
-              : 'border-surface/60 opacity-60'"
+              : 'border-surface/60 opacity-60 cursor-pointer'"
           >
             <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold shrink-0 transition-colors"
                  :class="isCompleted(lesson.id)
@@ -78,13 +98,10 @@
               NEW
             </span>
 
-            <div v-if="!canAccess(lesson)" class="relative group/lock">
+            <div v-if="!canAccess(lesson)">
               <svg class="w-4 h-4 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
               </svg>
-              <div class="absolute bottom-full right-0 mb-2 px-3 py-1.5 bg-charcoal text-white text-xs rounded-lg whitespace-nowrap opacity-0 group-hover/lock:opacity-100 transition-opacity pointer-events-none">
-                Upgrade to Pro
-              </div>
             </div>
             <svg v-else-if="!isCompleted(lesson.id)" class="w-4 h-4 text-muted group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -94,43 +111,35 @@
       </div>
     </template>
 
-    <!-- Settings -->
-    <div class="mt-8 bg-white border border-surface rounded-2xl p-6 shadow-sm">
-      <h3 class="text-sm font-semibold text-charcoal mb-4">Settings</h3>
-      <label class="flex items-center gap-3 cursor-pointer">
-        <input type="checkbox" v-model="notifyNewLessons" @change="toggleNotifications"
-               class="w-4 h-4 accent-coral rounded" />
-        <span class="text-sm text-charcoal">Email me when new lessons are added</span>
-      </label>
+    <!-- Footer links -->
+    <div class="mt-8 flex items-center gap-4 flex-wrap">
+      <router-link to="/settings" class="text-sm text-muted hover:text-charcoal transition-colors">Settings</router-link>
+      <router-link v-if="auth.isAdmin" to="/admin" class="text-sm text-coral hover:text-coral-hover font-medium transition-colors">Admin Panel</router-link>
+      <button @click="handleLogout" class="text-sm text-muted hover:text-charcoal transition-colors">Sign out</button>
     </div>
 
-    <div class="mt-6 flex items-center gap-4">
-      <router-link v-if="auth.isAdmin" to="/admin"
-                   class="text-sm text-coral hover:text-coral-hover font-medium transition-colors">
-        Admin Panel
-      </router-link>
-      <button @click="handleLogout"
-              class="text-sm text-muted hover:text-charcoal transition-colors">
-        Sign out
-      </button>
-    </div>
+    <!-- Upgrade modal -->
+    <UpgradeModal :show="showUpgradeModal" @close="showUpgradeModal = false" />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import UpgradeModal from '../components/UpgradeModal.vue'
 import api from '../api'
 
 const router = useRouter()
+const route = useRoute()
 const auth = useAuthStore()
 
 const lessons = ref([])
 const completedIds = ref([])
 const loading = ref(true)
 const animatedPercent = ref(0)
-const notifyNewLessons = ref(auth.user?.notifyNewLessons ?? true)
+const showUpgradeModal = ref(false)
+const showUpgradeBanner = ref(route.query.upgraded === 'true')
 
 const tiers = [
   { number: 1, label: 'Tier 1 — The Basics', sublabel: 'Free Claude features', icon: '🌱', free: true },
@@ -149,21 +158,13 @@ function isCompleted(lessonId) {
 }
 
 function canAccess(lesson) {
-  return lesson.plan === 'FREE' || auth.user?.plan === 'PRO'
+  return lesson.plan === 'FREE' || auth.hasPaidPlan
 }
 
 function isNew(lesson) {
   if (!lesson.createdAt) return false
   const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000
   return new Date(lesson.createdAt).getTime() > thirtyDaysAgo && !isCompleted(lesson.id)
-}
-
-async function toggleNotifications() {
-  try {
-    await api.put('/api/user/notifications', { notifyNewLessons: notifyNewLessons.value })
-  } catch {
-    notifyNewLessons.value = !notifyNewLessons.value
-  }
 }
 
 onMounted(async () => {
@@ -178,7 +179,6 @@ onMounted(async () => {
     console.error('Failed to load dashboard data', e)
   } finally {
     loading.value = false
-    // Animate progress bar after data loads
     nextTick(() => {
       setTimeout(() => {
         animatedPercent.value = Math.round((completedIds.value.length / 17) * 100)

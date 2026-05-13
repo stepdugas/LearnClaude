@@ -43,7 +43,7 @@ public class LessonController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        if (lesson.getPlan() == User.Plan.PRO && user.getPlan() == User.Plan.FREE) {
+        if (lesson.getPlan() == User.Plan.PRO && !user.hasPaidPlan()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("error", "Upgrade to Pro to access this lesson"));
         }

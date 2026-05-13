@@ -76,6 +76,13 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Stripe -->
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>25.3.0</version>
+        </dependency>
+
         <!-- Anthropic Claude SDK -->
         <dependency>
             <groupId>com.anthropic</groupId>

@@ -15,6 +15,16 @@ const routes = [
     meta: { title: 'Create Account | LearnClaude.ai' }
   },
   {
+    path: '/pricing',
+    component: () => import('../pages/PricingPage.vue'),
+    meta: { title: 'Pricing | LearnClaude.ai' }
+  },
+  {
+    path: '/settings',
+    component: () => import('../pages/SettingsPage.vue'),
+    meta: { requiresAuth: true, title: 'Settings | LearnClaude.ai' }
+  },
+  {
     path: '/dashboard',
     component: () => import('../pages/DashboardPage.vue'),
     meta: { requiresAuth: true, title: 'Dashboard | LearnClaude.ai' }

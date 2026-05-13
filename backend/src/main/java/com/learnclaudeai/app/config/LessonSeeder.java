@@ -41,12 +41,12 @@ public class LessonSeeder implements CommandLineRunner {
                 "Claude AI upload files images tutorial",
                 "Upload a PDF or screenshot to Claude and ask it to summarize the key points. Then upload a photo and ask Claude to describe what it sees in detail.");
 
-        seed(4, "Artifacts & Markdown", "artifacts-markdown", 1, User.Plan.FREE,
+        seed(4, "Artifacts & Markdown", "artifacts-markdown", 1, User.Plan.PRO,
                 "Use Claude's Artifacts feature to generate standalone documents, code snippets, charts, and interactive visualizations. Learn markdown formatting to get beautifully structured outputs. Artifacts work on free Claude.",
                 "Claude Artifacts markdown tutorial",
                 "Ask Claude to create an Artifact — try a React component, an SVG diagram, or a formatted report. Edit the Artifact inline and see it update in real time.");
 
-        seed(5, "Understanding Claude Plans", "claude-plans-free-vs-pro", 1, User.Plan.FREE,
+        seed(5, "Understanding Claude Plans", "claude-plans-free-vs-pro", 1, User.Plan.PRO,
                 "Learn exactly what you get with free Claude vs Claude Pro. Understand usage limits, model access, and which Pro features are worth upgrading for. This lesson helps you decide if and when to go Pro.",
                 "Claude Pro vs Free plan comparison 2025",
                 "Visit claude.ai/settings and review your current plan details. Make a list of the top 3 Pro features you'd actually use in your daily workflow, and why.");

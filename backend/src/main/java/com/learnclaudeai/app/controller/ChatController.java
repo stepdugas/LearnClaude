@@ -82,7 +82,7 @@ public class ChatController {
         }
 
         // Daily message cap
-        int dailyLimit = user.getPlan() == User.Plan.PRO ? proDailyLimit : freeDailyLimit;
+        int dailyLimit = user.hasPaidPlan() ? proDailyLimit : freeDailyLimit;
         int remaining = rateLimiter.checkChatDailyLimit(user.getId(), dailyLimit);
         if (remaining < 0) {
             return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
@@ -95,7 +95,7 @@ public class ChatController {
             return ResponseEntity.notFound().build();
         }
 
-        if (lesson.getPlan() == User.Plan.PRO && user.getPlan() == User.Plan.FREE) {
+        if (lesson.getPlan() == User.Plan.PRO && !user.hasPaidPlan()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body(Map.of("error", "Upgrade to Pro to use the AI tutor on this lesson"));
         }

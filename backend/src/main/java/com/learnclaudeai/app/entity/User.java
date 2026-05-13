@@ -25,6 +25,18 @@ public class User {
     @Column(nullable = false)
     private Role role = Role.USER;
 
+    @Column(name = "stripe_customer_id")
+    private String stripeCustomerId;
+
+    @Column(name = "subscription_id")
+    private String subscriptionId;
+
+    @Column(name = "subscription_status")
+    private String subscriptionStatus;
+
+    @Column(name = "plan_expires_at")
+    private Instant planExpiresAt;
+
     @Column(name = "notify_new_lessons", nullable = false)
     private boolean notifyNewLessons = true;
 
@@ -37,7 +49,7 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    public enum Plan { FREE, PRO }
+    public enum Plan { FREE, PRO, LIFETIME }
     public enum Role { USER, ADMIN }
 
     @PrePersist
@@ -66,6 +78,18 @@ public class User {
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
 
+    public String getStripeCustomerId() { return stripeCustomerId; }
+    public void setStripeCustomerId(String stripeCustomerId) { this.stripeCustomerId = stripeCustomerId; }
+
+    public String getSubscriptionId() { return subscriptionId; }
+    public void setSubscriptionId(String subscriptionId) { this.subscriptionId = subscriptionId; }
+
+    public String getSubscriptionStatus() { return subscriptionStatus; }
+    public void setSubscriptionStatus(String subscriptionStatus) { this.subscriptionStatus = subscriptionStatus; }
+
+    public Instant getPlanExpiresAt() { return planExpiresAt; }
+    public void setPlanExpiresAt(Instant planExpiresAt) { this.planExpiresAt = planExpiresAt; }
+
     public boolean isNotifyNewLessons() { return notifyNewLessons; }
     public void setNotifyNewLessons(boolean notifyNewLessons) { this.notifyNewLessons = notifyNewLessons; }
 
@@ -76,4 +100,5 @@ public class User {
     public Instant getUpdatedAt() { return updatedAt; }
 
     public boolean isAdmin() { return role == Role.ADMIN; }
+    public boolean hasPaidPlan() { return plan == Plan.PRO || plan == Plan.LIFETIME; }
 }
