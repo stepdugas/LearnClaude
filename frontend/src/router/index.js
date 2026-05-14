@@ -55,6 +55,16 @@ const routes = [
     meta: { title: 'Privacy Policy | LearnClaude.ai' }
   },
   {
+    path: '/certificate',
+    component: () => import('../pages/CertificatePage.vue'),
+    meta: { requiresAuth: true, title: 'Your Certificate | LearnClaude.ai' }
+  },
+  {
+    path: '/verify/:certificateId',
+    component: () => import('../pages/VerifyPage.vue'),
+    meta: { title: 'Verify Certificate | LearnClaude.ai' }
+  },
+  {
     path: '/admin',
     component: () => import('../pages/AdminPage.vue'),
     meta: { requiresAuth: true, requiresAdmin: true, title: 'Admin | LearnClaude.ai' }

@@ -46,6 +46,20 @@
       </p>
     </div>
 
+    <!-- Certificate banner -->
+    <div v-if="displayedProgress === 17" class="bg-charcoal rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4 animate-fade-in-up">
+      <div class="flex items-center gap-4">
+        <span class="text-3xl">🎓</span>
+        <div>
+          <p class="text-white font-semibold">You've completed the full course!</p>
+          <p class="text-white/60 text-sm">Your certificate is ready to download and share.</p>
+        </div>
+      </div>
+      <router-link to="/certificate" class="bg-coral hover:bg-coral-hover active:scale-[0.97] text-white font-semibold px-6 py-2.5 rounded-lg transition-all text-sm shrink-0">
+        Get Certificate
+      </router-link>
+    </div>
+
     <!-- Skeleton loader -->
     <template v-if="loading">
       <div v-for="i in 3" :key="i" class="mb-8">
