@@ -9,10 +9,6 @@ RUN npm run build
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/templates/default.conf.template
-COPY docker-entrypoint.sh /custom-entrypoint.sh
-RUN chmod +x /custom-entrypoint.sh
-ENV BACKEND_URL=http://backend.railway.internal:8080
+ENV BACKEND_URL=https://backend-production-e355d.up.railway.app
 ENV PORT=80
 EXPOSE 80
-ENTRYPOINT ["/custom-entrypoint.sh"]
-CMD ["nginx", "-g", "daemon off;"]
