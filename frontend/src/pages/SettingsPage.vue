@@ -60,7 +60,12 @@
     <!-- Account info -->
     <div class="bg-white border border-surface rounded-2xl p-8 shadow-sm">
       <h2 class="text-sm font-semibold text-muted uppercase tracking-wider mb-4">Account</h2>
-      <p class="text-sm text-charcoal">{{ auth.user?.email }}</p>
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-coral text-white text-sm font-bold flex items-center justify-center shrink-0">
+          {{ auth.user?.email?.charAt(0)?.toUpperCase() || '?' }}
+        </div>
+        <p class="text-sm text-charcoal">{{ auth.user?.email }}</p>
+      </div>
     </div>
   </div>
 </template>

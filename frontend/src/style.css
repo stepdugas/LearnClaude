@@ -86,3 +86,46 @@ html {
 .hero-orb {
   animation: orbFloat 8s ease-in-out infinite;
 }
+
+/* Global typography */
+body {
+  line-height: 1.65;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+.tracking-caps {
+  letter-spacing: 0.08em;
+}
+
+.prose-code {
+  background: #FAF9F5;
+  border-left: 3px solid #DA7756;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: ui-monospace, monospace;
+  overflow-x: auto;
+}
+
+/* Hero headline shimmer */
+@keyframes heroShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.hero-shimmer {
+  position: relative;
+}
+.hero-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: -8px -16px;
+  background: linear-gradient(90deg, transparent 0%, rgba(218,119,86,0.06) 25%, rgba(218,119,86,0.12) 50%, rgba(218,119,86,0.06) 75%, transparent 100%);
+  background-size: 200% 100%;
+  animation: heroShimmer 4s ease-in-out infinite;
+  border-radius: 16px;
+  z-index: -1;
+  pointer-events: none;
+}

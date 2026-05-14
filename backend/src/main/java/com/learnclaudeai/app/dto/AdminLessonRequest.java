@@ -9,5 +9,6 @@ public record AdminLessonRequest(
         @NotBlank @Pattern(regexp = "^(FREE|PRO)$") String plan,
         @NotBlank @Size(max = 500) String description,
         @NotBlank @Size(max = 200) String youtubeSearchQuery,
-        @NotBlank @Size(max = 500) String challenge
+        @NotBlank @Size(max = 500) String challenge,
+        @Size(max = 300) String deliverable
 ) {}

@@ -108,6 +108,9 @@
             <span class="text-sm font-medium flex-1" :class="canAccess(lesson) ? 'text-charcoal' : 'text-muted'">
               {{ lesson.title }}
             </span>
+            <span v-if="isCompleted(lesson.id) && hasDeliverableSubmission(lesson.id)" class="text-sm" title="Deliverable submitted">
+              &#127942;
+            </span>
             <span v-if="isNew(lesson)" class="text-[10px] font-bold bg-coral text-white px-2 py-0.5 rounded-full uppercase tracking-wider">
               NEW
             </span>
@@ -150,6 +153,7 @@ const auth = useAuthStore()
 
 const lessons = ref([])
 const completedIds = ref([])
+const deliverableIds = ref([])
 const loading = ref(true)
 const animatedPercent = ref(0)
 const showUpgradeModal = ref(false)
@@ -186,6 +190,10 @@ function canAccess(lesson) {
   return lesson.plan === 'FREE' || auth.hasPaidPlan
 }
 
+function hasDeliverableSubmission(lessonId) {
+  return deliverableIds.value.includes(lessonId)
+}
+
 function isNew(lesson) {
   if (!lesson.createdAt) return false
   const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000
@@ -194,12 +202,14 @@ function isNew(lesson) {
 
 onMounted(async () => {
   try {
-    const [lessonsRes, progressRes] = await Promise.all([
+    const [lessonsRes, progressRes, deliverablesRes] = await Promise.all([
       api.get('/api/lessons'),
-      api.get('/api/progress')
+      api.get('/api/progress'),
+      api.get('/api/deliverables')
     ])
     lessons.value = lessonsRes.data
     completedIds.value = progressRes.data
+    deliverableIds.value = deliverablesRes.data
   } catch (e) {
     console.error('Failed to load dashboard data', e)
   } finally {

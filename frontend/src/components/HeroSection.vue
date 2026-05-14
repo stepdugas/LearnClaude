@@ -12,7 +12,7 @@
         17 interactive lessons across 3 tiers
       </div>
 
-      <h1 class="animate-fade-in-up text-5xl md:text-6xl font-bold text-charcoal leading-tight tracking-tight mb-6" style="animation-delay: 0.1s">
+      <h1 class="hero-shimmer animate-fade-in-up text-5xl md:text-6xl font-bold text-charcoal leading-tight tracking-tight mb-6" style="animation-delay: 0.1s">
         Learn to use Claude AI<br />
         <span class="text-coral">like a power user</span>
       </h1>
@@ -23,10 +23,10 @@
       </p>
 
       <div class="animate-fade-in-up flex flex-col sm:flex-row items-center justify-center gap-4" style="animation-delay: 0.3s">
-        <router-link to="/register" class="bg-coral hover:bg-coral-hover active:scale-[0.97] text-white font-semibold px-8 py-3.5 rounded-lg text-lg transition-all shadow-md hover:shadow-lg">
+        <router-link to="/register" class="bg-coral hover:bg-coral-hover active:scale-[0.97] hover:scale-[1.02] text-white font-semibold px-8 py-3.5 rounded-lg text-lg transition-all shadow-md hover:shadow-lg">
           Get Started Free
         </router-link>
-        <a href="#curriculum" class="text-charcoal font-medium px-8 py-3.5 rounded-lg text-lg border border-surface hover:border-muted/30 hover:shadow-sm transition-all">
+        <a href="#curriculum" class="text-charcoal font-medium px-8 py-3.5 rounded-lg text-lg border border-surface hover:border-muted/30 hover:shadow-lg hover:scale-[1.02] transition-all">
           View Curriculum
         </a>
       </div>

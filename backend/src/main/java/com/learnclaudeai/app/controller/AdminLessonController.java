@@ -138,6 +138,7 @@ public class AdminLessonController {
         lesson.setDescription(request.description());
         lesson.setYoutubeSearchQuery(request.youtubeSearchQuery());
         lesson.setChallenge(request.challenge());
+        lesson.setDeliverable(request.deliverable());
         return lesson;
     }
 }

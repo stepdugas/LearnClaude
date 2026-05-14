@@ -81,6 +81,15 @@
             <p class="text-charcoal/80 leading-relaxed">{{ lesson.challenge }}</p>
           </div>
 
+          <!-- Deliverable Section -->
+          <DeliverableSection
+            v-if="lesson.deliverable"
+            :lesson-id="lesson.id"
+            :lesson-title="lesson.title"
+            :deliverable-description="lesson.deliverable"
+            class="mb-8"
+          />
+
           <!-- Mark Complete -->
           <div class="flex items-center gap-4 mb-8 lg:mb-0">
             <button v-if="!completed" @click="markComplete" :disabled="marking"
@@ -129,6 +138,7 @@
 import { ref, computed, onMounted, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import AiTutor from '../components/AiTutor.vue'
+import DeliverableSection from '../components/DeliverableSection.vue'
 import api from '../api'
 
 const route = useRoute()

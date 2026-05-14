@@ -14,6 +14,7 @@ public record LessonDto(
         String description,
         String youtubeSearchQuery,
         String challenge,
+        String deliverable,
         Instant createdAt
 ) {
     public static LessonDto from(Lesson lesson) {
@@ -27,6 +28,7 @@ public record LessonDto(
                 lesson.getDescription(),
                 lesson.getYoutubeSearchQuery(),
                 lesson.getChallenge(),
+                lesson.getDeliverable(),
                 lesson.getCreatedAt()
         );
     }

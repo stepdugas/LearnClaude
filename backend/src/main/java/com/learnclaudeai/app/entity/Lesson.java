@@ -36,6 +36,9 @@ public class Lesson {
     @Column(nullable = false, length = 500)
     private String challenge;
 
+    @Column(nullable = true, length = 300)
+    private String deliverable;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
@@ -70,6 +73,9 @@ public class Lesson {
 
     public String getChallenge() { return challenge; }
     public void setChallenge(String challenge) { this.challenge = challenge; }
+
+    public String getDeliverable() { return deliverable; }
+    public void setDeliverable(String deliverable) { this.deliverable = deliverable; }
 
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }

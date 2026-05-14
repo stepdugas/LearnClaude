@@ -9,7 +9,7 @@
         <p class="text-muted">Start learning Claude AI for free</p>
       </div>
 
-      <form @submit.prevent="handleRegister" class="bg-white border border-surface rounded-2xl p-8 space-y-5 shadow-md">
+      <form @submit.prevent="handleRegister" class="bg-white border border-surface rounded-2xl p-8 space-y-5 shadow-md hover:shadow-lg transition-shadow duration-300">
         <div v-if="error" class="bg-red-50 text-red-600 text-sm px-4 py-3 rounded-lg">
           {{ error }}
         </div>

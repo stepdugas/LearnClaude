@@ -43,7 +43,7 @@
       </div>
 
       <!-- Certificate preview card -->
-      <div class="bg-white border-2 border-coral/20 rounded-2xl p-10 shadow-lg mb-8 relative overflow-hidden">
+      <div class="bg-white border-2 border-coral/20 rounded-2xl p-10 shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8 relative overflow-hidden">
         <!-- Top accent -->
         <div class="absolute top-0 left-0 right-0 h-2 bg-coral"></div>
 

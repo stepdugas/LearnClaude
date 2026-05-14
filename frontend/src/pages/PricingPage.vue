@@ -11,7 +11,7 @@
 
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 max-w-5xl mx-auto">
       <!-- Free -->
-      <div class="bg-white rounded-2xl p-7 border border-surface shadow-sm">
+      <div class="bg-white rounded-2xl p-7 border border-surface shadow-sm hover:-translate-y-1 transition-transform duration-300">
         <h3 class="font-semibold text-charcoal text-lg mb-1">Free</h3>
         <p class="text-muted text-xs mb-5">Get started, no card needed</p>
         <div class="mb-6">
@@ -29,7 +29,7 @@
       </div>
 
       <!-- Monthly -->
-      <div class="bg-white rounded-2xl p-7 border border-surface shadow-sm">
+      <div class="bg-white rounded-2xl p-7 border border-surface shadow-sm hover:-translate-y-1 transition-transform duration-300">
         <h3 class="font-semibold text-charcoal text-lg mb-1">Pro Monthly</h3>
         <p class="text-muted text-xs mb-5">Cancel anytime</p>
         <div class="mb-6">
@@ -48,7 +48,7 @@
       </div>
 
       <!-- Yearly -->
-      <div class="bg-white rounded-2xl p-7 border-2 border-coral relative shadow-lg">
+      <div class="bg-white rounded-2xl p-7 border-2 border-coral relative shadow-lg hover:-translate-y-1 transition-transform duration-300">
         <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-coral text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">
           Save 42%
         </div>
@@ -71,7 +71,7 @@
       </div>
 
       <!-- Lifetime -->
-      <div v-if="lifetimeAvailable" class="bg-charcoal rounded-2xl p-7 text-white shadow-lg">
+      <div v-if="lifetimeAvailable" class="bg-charcoal rounded-2xl p-7 text-white shadow-lg hover:-translate-y-1 transition-transform duration-300">
         <h3 class="font-semibold text-lg mb-1">Lifetime</h3>
         <p class="text-white/60 text-xs mb-5">{{ lifetimeRemaining }} of {{ lifetimeMax }} left</p>
         <div class="mb-6">
