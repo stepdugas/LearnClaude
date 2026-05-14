@@ -141,6 +141,17 @@ const animatedPercent = ref(0)
 const showUpgradeModal = ref(false)
 const showUpgradeBanner = ref(route.query.upgraded === 'true')
 
+// After Stripe checkout redirect, refresh user data from API so plan is current
+if (route.query.upgraded === 'true') {
+  api.get('/api/user/me').then(({ data }) => {
+    auth.setAuth({
+      accessToken: auth.accessToken,
+      refreshToken: auth.refreshToken,
+      user: data
+    })
+  }).catch(() => {})
+}
+
 const tiers = [
   { number: 1, label: 'Tier 1 — The Basics', sublabel: 'Free Claude features', icon: '🌱', free: true },
   { number: 2, label: 'Tier 2 — Claude Pro', sublabel: 'Requires Claude Pro', icon: '🔧', free: false },

@@ -10,8 +10,8 @@
       <div class="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-sm text-muted">
         <a href="#curriculum" class="hover:text-charcoal transition-colors">Curriculum</a>
         <a href="#pricing" class="hover:text-charcoal transition-colors">Pricing</a>
-        <a href="#" class="hover:text-charcoal transition-colors">Terms</a>
-        <a href="#" class="hover:text-charcoal transition-colors">Privacy</a>
+        <router-link to="/terms" class="hover:text-charcoal transition-colors">Terms</router-link>
+        <router-link to="/privacy" class="hover:text-charcoal transition-colors">Privacy</router-link>
       </div>
     </div>
     <div class="max-w-5xl mx-auto mt-8 pt-6 border-t border-surface text-center text-xs text-muted">

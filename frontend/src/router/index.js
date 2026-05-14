@@ -45,6 +45,16 @@ const routes = [
     meta: { title: 'Learn Claude AI | LearnClaude.ai' }
   },
   {
+    path: '/terms',
+    component: () => import('../pages/TermsPage.vue'),
+    meta: { title: 'Terms of Service | LearnClaude.ai' }
+  },
+  {
+    path: '/privacy',
+    component: () => import('../pages/PrivacyPage.vue'),
+    meta: { title: 'Privacy Policy | LearnClaude.ai' }
+  },
+  {
     path: '/admin',
     component: () => import('../pages/AdminPage.vue'),
     meta: { requiresAuth: true, requiresAdmin: true, title: 'Admin | LearnClaude.ai' }

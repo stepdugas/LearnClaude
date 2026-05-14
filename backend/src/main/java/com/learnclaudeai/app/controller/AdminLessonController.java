@@ -1,5 +1,6 @@
 package com.learnclaudeai.app.controller;
 
+import com.learnclaudeai.app.config.EmailService;
 import com.learnclaudeai.app.dto.AdminLessonRequest;
 import com.learnclaudeai.app.dto.LessonDto;
 import com.learnclaudeai.app.entity.Lesson;
@@ -27,10 +28,13 @@ public class AdminLessonController {
 
     private final LessonRepository lessonRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
-    public AdminLessonController(LessonRepository lessonRepository, UserRepository userRepository) {
+    public AdminLessonController(LessonRepository lessonRepository, UserRepository userRepository,
+                                 EmailService emailService) {
         this.lessonRepository = lessonRepository;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     private ResponseEntity<?> requireAdmin(User user) {
@@ -65,19 +69,17 @@ public class AdminLessonController {
                     .body(Map.of("error", "Lesson number " + request.number() + " already exists"));
         }
 
-        Lesson lesson = applyRequest(new Lesson(), request);
-        lesson = lessonRepository.save(lesson);
+        Lesson saved = lessonRepository.save(applyRequest(new Lesson(), request));
 
-        log.info("Admin {} created lesson #{}: {}", user.getEmail(), lesson.getNumber(), lesson.getTitle());
+        log.info("Admin {} created lesson #{}: {}", user.getEmail(), saved.getNumber(), saved.getTitle());
 
-        // Find users to notify
+        // Notify subscribed users
         List<User> subscribedUsers = userRepository.findByNotifyNewLessonsTrue();
-        log.info("New lesson created. {} users subscribed for notifications.", subscribedUsers.size());
-        // TODO: Hook up email service (Resend, SendGrid, etc.) here
-        // For now, log the emails that should be notified
-        subscribedUsers.forEach(u -> log.info("  Notify: {}", u.getEmail()));
+        log.info("New lesson created. Notifying {} subscribed users.", subscribedUsers.size());
+        subscribedUsers.forEach(u ->
+                emailService.sendNewLessonNotification(u.getEmail(), saved.getTitle(), saved.getSlug()));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(LessonDto.from(lesson));
+        return ResponseEntity.status(HttpStatus.CREATED).body(LessonDto.from(saved));
     }
 
     @PutMapping("/{id}")

@@ -266,9 +266,7 @@ public class BillingController {
         Subscription subscription = (Subscription) event.getDataObjectDeserializer().getObject().orElse(null);
         if (subscription == null) return;
 
-        User user = userRepository.findAll().stream()
-                .filter(u -> subscription.getId().equals(u.getSubscriptionId()))
-                .findFirst().orElse(null);
+        User user = userRepository.findBySubscriptionId(subscription.getId()).orElse(null);
         if (user == null) return;
 
         user.setPlan(User.Plan.FREE);
@@ -283,9 +281,7 @@ public class BillingController {
         Subscription subscription = (Subscription) event.getDataObjectDeserializer().getObject().orElse(null);
         if (subscription == null) return;
 
-        User user = userRepository.findAll().stream()
-                .filter(u -> subscription.getId().equals(u.getSubscriptionId()))
-                .findFirst().orElse(null);
+        User user = userRepository.findBySubscriptionId(subscription.getId()).orElse(null);
         if (user == null) return;
 
         user.setSubscriptionStatus(subscription.getStatus());
